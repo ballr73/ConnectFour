@@ -45,6 +45,9 @@ public class Game {
 
                 if(isWinner(column,row)) {
                     _winner = _disc;
+                    if(_listener != null) {
+                        _listener.gameOver(_winner);
+                    }
                     return;
                 }
 
@@ -60,11 +63,6 @@ public class Game {
 
     private boolean isWinner(int column, int row) {
         boolean result = checkRow(row) || checkColumn(column) || checkDiag(column, row);
-        if(result){
-            if(_listener != null) {
-                _listener.winner();
-            }
-        }
         return result;
     }
 

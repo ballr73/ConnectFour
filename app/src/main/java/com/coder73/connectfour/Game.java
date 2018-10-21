@@ -33,10 +33,9 @@ public class Game {
         }
     }
 
-    public void play(int column) {
+    public boolean play(int column) {
 
-        if(_winner != Disc.NONE)
-            return;
+        boolean result = false;
 
         for (int row = 0; row < 6; row ++) {
             if(_board[column][row] == Disc.NONE){
@@ -48,7 +47,6 @@ public class Game {
                     if(_listener != null) {
                         _listener.gameOver(_winner);
                     }
-                    return;
                 }
 
                 if(_disc == Disc.RED) {
@@ -56,9 +54,18 @@ public class Game {
                 } else {
                     _disc = Disc.RED;
                 }
+                result = true;
                 break;
             }
         }
+
+        if (result == false) {
+            if(_listener != null) {
+                _listener.invalidMove();
+            }
+        }
+
+        return result;
     }
 
     private boolean isWinner(int column, int row) {

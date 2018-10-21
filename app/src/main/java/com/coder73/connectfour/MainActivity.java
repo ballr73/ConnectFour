@@ -3,6 +3,8 @@ package com.coder73.connectfour;
 import android.app.Activity;
 import android.os.Bundle;
 import android.view.View;
+import android.view.ViewGroup;
+import android.widget.GridLayout;
 import android.widget.ImageView;
 import android.widget.Toast;
 
@@ -15,6 +17,7 @@ public class MainActivity extends Activity implements GameListener {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
+
         setNextDiscImageView();
     }
 
@@ -41,23 +44,26 @@ public class MainActivity extends Activity implements GameListener {
     }
 
     public void playButtonOnClick(View view) {
-        Random random = new Random();
-        ImageView imageView = (ImageView) view;
-        imageView.setTranslationY(-1000f);
+        Disc disc = _game._disc;
+        int col = Integer.parseInt(view.getTag().toString());
+        Toast.makeText(this, String.format("%s Playing column %d", disc.toString(), col), Toast.LENGTH_SHORT).show();
 
-        if(_game._disc == Disc.YELLOW) {
-            imageView.setImageResource(R.drawable.yellow);
+
+        if(_game.play(col)) {
+            ImageView imageView = (ImageView) view;
+            imageView.setTranslationY(-1000f);
+
+            if(disc == Disc.YELLOW) {
+                imageView.setImageResource(R.drawable.yellow);
+            }
+            else {
+                imageView.setImageResource(R.drawable.red);
+            }
+
+            imageView.animate().translationYBy(1000f).setDuration(300);
+
+            setNextDiscImageView();
         }
-        else {
-            imageView.setImageResource(R.drawable.red);
-        }
 
-        imageView.animate().translationYBy(1000f).setDuration(300);
-
-        int col = random.nextInt((6 - 0) + 1) + 0;
-        Toast.makeText(this, String.format("%s Playing column %d", _game.getDisc().toString(), col), Toast.LENGTH_SHORT).show();
-
-        _game.play(col);
-        setNextDiscImageView();
     }
 }

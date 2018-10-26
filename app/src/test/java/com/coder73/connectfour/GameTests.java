@@ -16,6 +16,7 @@ public class GameTests {
         Game game = new Game(null);
 
         //when
+        game.newGame();
         game.play(0);
         Disc disc1 = game.getDisc();
         game.play(0);
@@ -30,7 +31,7 @@ public class GameTests {
 
         //Given
         Game game = new Game(null);
-
+        game.newGame();
         for(int x = 0; x < 6; x++) {
             game.play(0);
         }
@@ -38,6 +39,7 @@ public class GameTests {
         Disc expected = game.getDisc();
 
         //When
+
         game.play(0);
         Disc actual = game.getDisc();
 
@@ -49,6 +51,7 @@ public class GameTests {
     public void WhenRedHasFourInColumnWinnerIsRed() {
         //Given
         Game game = new Game(null);
+        game.newGame();
         game.play(0);
         game.play(1);
         game.play(0);
@@ -69,6 +72,7 @@ public class GameTests {
     public void WhenYellowHasFourInColumnWinnerIsYellow() {
         //Given
         Game game = new Game(null);
+        game.newGame();
         game.play(0);
         game.play(1);
         game.play(0);
@@ -89,6 +93,7 @@ public class GameTests {
     public void WhenRedHasFourInRowWinnerIsRed() {
         //Given
         Game game = new Game(null);
+        game.newGame();
         game.play(0);
         game.play(0);
         game.play(1);
@@ -108,6 +113,7 @@ public class GameTests {
     public void WhenYellowHasFourInRowWinnerIsYellow() {
         //Given
         Game game = new Game(null);
+        game.newGame();
         game.play(0);
         game.play(1);
         game.play(1);

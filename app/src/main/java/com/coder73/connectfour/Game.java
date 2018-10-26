@@ -4,9 +4,8 @@ public class Game {
     private final GameListener _listener;
     private Disc[][] _board;
     Disc _disc = Disc.NONE;
-
     Disc _winner = Disc.NONE;
-
+    boolean _gameOver = false;
     public Disc getDisc() {
 
         return _disc;
@@ -18,13 +17,13 @@ public class Game {
 
     public Game(GameListener listener) {
         _listener = listener;
-        newGame();
     }
 
     public void newGame(){
         _board = new Disc[7][6];
         _disc = Disc.RED;
         _winner = Disc.NONE;
+        _gameOver = false;
 
         for(int col = 0; col < 7; col++){
             for(int row = 0; row < 6; row ++) {
@@ -37,6 +36,13 @@ public class Game {
 
         boolean result = false;
 
+        if(_gameOver) {
+            if(_listener != null) {
+                _listener.gameOver(_winner);
+            }
+            return false;
+        }
+
         for (int row = 0; row < 6; row ++) {
             if(_board[column][row] == Disc.NONE){
 
@@ -46,15 +52,19 @@ public class Game {
                     _winner = _disc;
                     if(_listener != null) {
                         _listener.gameOver(_winner);
+                        _gameOver = true;
+                        result = true;
                     }
                 }
+                else {
 
-                if(_disc == Disc.RED) {
-                    _disc = Disc.YELLOW;
-                } else {
-                    _disc = Disc.RED;
+                    if (_disc == Disc.RED) {
+                        _disc = Disc.YELLOW;
+                    } else {
+                        _disc = Disc.RED;
+                    }
+                    result = true;
                 }
-                result = true;
                 break;
             }
         }

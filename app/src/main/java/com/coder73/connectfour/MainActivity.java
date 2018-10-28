@@ -1,25 +1,25 @@
 package com.coder73.connectfour;
 
 import android.app.Activity;
-import android.media.Image;
 import android.os.Bundle;
 import android.view.View;
-import android.view.ViewGroup;
-import android.widget.GridLayout;
 import android.widget.ImageView;
+import android.widget.LinearLayout;
+import android.widget.TextView;
 import android.widget.Toast;
-
-import java.util.Random;
 
 public class MainActivity extends Activity implements GameListener {
     Game _game = new Game(this);
-    android.support.v7.widget.GridLayout _layout;
-
+    android.support.v7.widget.GridLayout _gridLayout;
+    LinearLayout _gameOverLayout;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
-        _layout = findViewById(R.id.gridLayout);
+
+        _gridLayout = findViewById(R.id.gridLayout);
+        _gameOverLayout = findViewById(R.id.gameOverLayout);
+
         resetGame();
         setNextDiscImageView();
     }
@@ -43,6 +43,10 @@ public class MainActivity extends Activity implements GameListener {
     @Override
     public void gameOver(Disc winner) {
         Toast.makeText(this, "Game Over." + winner.toString() + " wins!", Toast.LENGTH_LONG).show();
+        TextView gameOverTextView = findViewById(R.id.gameOverTextView);
+        gameOverTextView.setText("Game Over!" + winner.toString() + " wins!");
+
+        _gameOverLayout.setVisibility(View.VISIBLE);
     }
 
     public void playButtonOnClick(View view) {
@@ -68,13 +72,15 @@ public class MainActivity extends Activity implements GameListener {
     }
 
     public void newGameButtonOnClick(View view) {
+
         resetGame();
     }
 
     private void resetGame() {
+        _gameOverLayout.setVisibility(View.INVISIBLE);
         _game.newGame();
-        for(int x = 0; x < _layout.getChildCount(); x++) {
-            ImageView imageView = (ImageView) _layout.getChildAt(x);
+        for(int x = 0; x < _gridLayout.getChildCount(); x++) {
+            ImageView imageView = (ImageView) _gridLayout.getChildAt(x);
             imageView.setImageResource(R.color.colorPrimary);
         }
     }

@@ -1,6 +1,7 @@
 package com.coder73.connectfour;
 
 import android.app.Activity;
+import android.media.Image;
 import android.os.Bundle;
 import android.view.View;
 import android.view.ViewGroup;
@@ -18,6 +19,7 @@ public class MainActivity extends Activity implements GameListener {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
+        _layout = findViewById(R.id.gridLayout);
         resetGame();
         setNextDiscImageView();
     }
@@ -45,7 +47,7 @@ public class MainActivity extends Activity implements GameListener {
 
     public void playButtonOnClick(View view) {
         Disc disc = _game._disc;
-        int col = Integer.parseInt(view.getTag().toString());
+        int col = Integer.parseInt(view.getTag().toString()); // get column from tag attribute
 
         if(_game.play(col)) {
             Toast.makeText(this, String.format("%s Playing column %d", disc.toString(), col), Toast.LENGTH_SHORT).show();

@@ -11,7 +11,7 @@ public class Game {
         return _disc;
     }
 
-    public Disc getWinner() {
+    Disc getWinner() {
         return _winner;
     }
 
@@ -84,6 +84,30 @@ public class Game {
     }
 
     private boolean checkDiag(int row, int column) {
+        int rowIndex = row - column;
+        if(rowIndex <0)
+            rowIndex = 0;
+
+        int columnIndex = row - column;
+        if(columnIndex < 0)
+            columnIndex = 0;
+
+        int count = 0;
+        while (columnIndex < 7 && rowIndex < 6) {
+            if(_board[columnIndex][rowIndex] == _disc) {
+                count++;
+                if(count == 4){
+                    return true;
+                }
+            }
+            else {
+                count = 0;
+            }
+
+            rowIndex++;
+            columnIndex++;
+        }
+
         return false;
     }
 
@@ -92,7 +116,7 @@ public class Game {
         for (int row = 0; row < 6; row++) {
             if(_board[col][row] == _disc) {
                 count++;
-                if(count ==4) {
+                if(count == 4) {
                     return true;
                 }
             } else {

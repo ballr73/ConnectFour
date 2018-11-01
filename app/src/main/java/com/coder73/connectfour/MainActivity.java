@@ -1,8 +1,13 @@
 package com.coder73.connectfour;
 
+import android.animation.Animator;
+import android.animation.AnimatorListenerAdapter;
 import android.app.Activity;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.View;
+import android.view.animation.AlphaAnimation;
+import android.view.animation.Animation;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
@@ -42,11 +47,17 @@ public class MainActivity extends Activity implements GameListener {
 
     @Override
     public void gameOver(Disc winner) {
-        Toast.makeText(this, "Game Over." + winner.toString() + " wins!", Toast.LENGTH_LONG).show();
-        TextView gameOverTextView = findViewById(R.id.gameOverTextView);
-        gameOverTextView.setText("Game Over!" + winner.toString() + " wins!");
+        Log.i(this.getClass().getName(),  "Game Over." + winner.toString() + " wins!");
 
+        TextView gameOverTextView = findViewById(R.id.gameOverTextView);
+        gameOverTextView.setText("Game Over! " + winner.toString() + " wins!");
+
+        _gameOverLayout.setAlpha(0f);
         _gameOverLayout.setVisibility(View.VISIBLE);
+        _gameOverLayout.animate()
+                .alpha(1f)
+                .setDuration(1000)
+                .setListener(null);
     }
 
     public void playButtonOnClick(View view) {
@@ -54,7 +65,9 @@ public class MainActivity extends Activity implements GameListener {
         int col = Integer.parseInt(view.getTag().toString()); // get column from tag attribute
 
         if(_game.play(col)) {
-            Toast.makeText(this, String.format("%s Playing column %d", disc.toString(), col), Toast.LENGTH_SHORT).show();
+
+            Log.i(this.getClass().getName(), String.format("%s Playing column %d", disc.toString(), col));
+
             ImageView imageView = (ImageView) view;
             imageView.setTranslationY(-1000f);
 
@@ -77,7 +90,16 @@ public class MainActivity extends Activity implements GameListener {
     }
 
     private void resetGame() {
-        _gameOverLayout.setVisibility(View.INVISIBLE);
+        _gameOverLayout.animate()
+                .alpha(0f)
+                .setDuration(1000)
+                .setListener(new AnimatorListenerAdapter() {
+                    @Override
+                    public void onAnimationEnd(Animator animation) {
+                        _gameOverLayout.setVisibility(View.INVISIBLE);
+                    }
+                });
+
         _game.newGame();
         for(int x = 0; x < _gridLayout.getChildCount(); x++) {
             ImageView imageView = (ImageView) _gridLayout.getChildAt(x);

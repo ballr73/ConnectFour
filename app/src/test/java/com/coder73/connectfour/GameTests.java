@@ -130,4 +130,74 @@ public class GameTests {
         assertEquals(Disc.YELLOW, actual);
 
     }
+
+    @Test
+    public void WhenRedHasFourInDiagWinnerIsRed() {
+        //Given
+        Game game = new Game(null);
+        game.newGame();
+        game.play(0);
+        game.play(1);
+        game.play(1);
+        game.play(2);
+        game.play(3);
+        game.play(2);
+        game.play(2);
+        game.play(3);
+        game.play(3);
+        game.play(4);
+        game.play(3);
+
+        //when
+        Disc actual = game.getWinner();
+
+        //Then
+        assertEquals(Disc.RED, actual);
+    }
+    @Test
+    public void WhenYellowHasFourInDiagWinnerIsYellow() {
+        //Given
+        Game game = new Game(null);
+        game.newGame();
+        game.play(1);
+        game.play(0);
+        game.play(2);
+        game.play(1);
+        game.play(2);
+        game.play(2);
+        game.play(3);
+        game.play(3);
+        game.play(3);
+        game.play(3);
+
+        //when
+        Disc actual = game.getWinner();
+
+        //Then
+        assertEquals(Disc.YELLOW, actual);
+    }
+
+    @Test
+    public void WhenRedHasFourInDiagDownWinnerIsRed() {
+        //Given
+        Game game = new Game(null);
+        game.newGame();
+        game.play(3);
+        game.play(2);
+        game.play(2);
+        game.play(1);
+        game.play(1);
+        game.play(0);
+        game.play(1);
+        game.play(0);
+        game.play(0);
+        game.play(1);
+        game.play(0);
+
+        //when
+        Disc actual = game.getWinner();
+
+        //Then
+        assertEquals(Disc.RED, actual);
+    }
 }

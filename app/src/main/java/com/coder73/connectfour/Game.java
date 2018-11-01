@@ -79,11 +79,11 @@ public class Game {
     }
 
     private boolean isWinner(int column, int row) {
-        boolean result = checkRow(row) || checkColumn(column) || checkDiag(column, row);
+        boolean result = checkRow(row) || checkColumn(column) || checkDiagUp(column, row) || checkDiagDown(column, row);
         return result;
     }
 
-    private boolean checkDiag(int row, int column) {
+    private boolean checkDiagUp(int row, int column) {
         int rowIndex = row - column;
         if(rowIndex <0)
             rowIndex = 0;
@@ -105,6 +105,34 @@ public class Game {
             }
 
             rowIndex++;
+            columnIndex++;
+        }
+
+        return false;
+    }
+
+    private boolean checkDiagDown(int row, int column) {
+        int rowIndex = row + column;
+        if(rowIndex > 5)
+            rowIndex = 5;
+
+        int columnIndex = row - column;
+        if(columnIndex < 0)
+            columnIndex = 0;
+
+        int count = 0;
+        while (columnIndex < 7 && rowIndex >=0) {
+            if(_board[columnIndex][rowIndex] == _disc) {
+                count++;
+                if(count == 4){
+                    return true;
+                }
+            }
+            else {
+                count = 0;
+            }
+
+            rowIndex--;
             columnIndex++;
         }
 

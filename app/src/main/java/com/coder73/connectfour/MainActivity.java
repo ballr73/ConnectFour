@@ -85,7 +85,6 @@ public class MainActivity extends Activity implements GameListener {
     }
 
     public void newGameButtonOnClick(View view) {
-
         resetGame();
     }
 

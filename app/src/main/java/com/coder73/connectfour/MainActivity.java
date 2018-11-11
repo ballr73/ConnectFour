@@ -61,14 +61,18 @@ public class MainActivity extends Activity implements GameListener {
     }
 
     public void playButtonOnClick(View view) {
+
         Disc disc = _game._disc;
         int col = Integer.parseInt(view.getTag().toString()); // get column from tag attribute
 
-        if(_game.play(col)) {
+        int row = _game.play(col);
+
+        if(row != -1) {
 
             Log.i(this.getClass().getName(), String.format("%s Playing column %d", disc.toString(), col));
 
-            ImageView imageView = (ImageView) view;
+//            ImageView imageView = (ImageView) view;
+            ImageView imageView = (ImageView) _gridLayout.getChildAt((_gridLayout.getColumnCount() * row) + col);
             imageView.setTranslationY(-1000f);
 
             if(disc == Disc.YELLOW) {

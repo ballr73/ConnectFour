@@ -32,28 +32,27 @@ public class Game {
         }
     }
 
-    public boolean play(int column) {
+    public int play(int column) {
 
-        boolean result = false;
+        int result = -1;
 
         if(_gameOver) {
             if(_listener != null) {
                 _listener.gameOver(_winner);
             }
-            return false;
+            return -1;
         }
 
         for (int row = 0; row < 6; row ++) {
             if(_board[column][row] == Disc.NONE){
 
                 _board[column][row] = _disc;
-
+                result = row;
                 if(isWinner(column,row)) {
                     _winner = _disc;
                     if(_listener != null) {
                         _listener.gameOver(_winner);
                         _gameOver = true;
-                        result = true;
                     }
                 }
                 else {
@@ -63,13 +62,12 @@ public class Game {
                     } else {
                         _disc = Disc.RED;
                     }
-                    result = true;
                 }
                 break;
             }
         }
 
-        if (result == false) {
+        if (result == -1) {
             if(_listener != null) {
                 _listener.invalidMove();
             }

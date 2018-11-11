@@ -43,7 +43,7 @@ public class Game {
             return -1;
         }
 
-        for (int row = 0; row < 6; row ++) {
+        for (int row = 5; row >= 0; row --) {
             if(_board[column][row] == Disc.NONE){
 
                 _board[column][row] = _disc;

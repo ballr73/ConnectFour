@@ -81,18 +81,19 @@ public class Game {
         return result;
     }
 
-    private boolean checkDiagUp(int row, int column) {
-        int rowIndex = row - column;
-        if(rowIndex <0)
-            rowIndex = 0;
+    private boolean checkDiagUp(int column, int row) {
 
-        int columnIndex = row - column;
-        if(columnIndex < 0)
-            columnIndex = 0;
+        int startRow = row + column;
+        if(startRow > 5)
+            startRow = 5;
+
+        int startColumn = (5 - row) - column;
+        if(startColumn < 0)
+            startColumn = 0;
 
         int count = 0;
-        while (columnIndex < 7 && rowIndex < 6) {
-            if(_board[columnIndex][rowIndex] == _disc) {
+        while (startColumn <= 6 && startRow >= 0) {
+            if(_board[startColumn][startRow] == _disc) {
                 count++;
                 if(count == 4){
                     return true;
@@ -102,25 +103,25 @@ public class Game {
                 count = 0;
             }
 
-            rowIndex++;
-            columnIndex++;
+            startRow--;
+            startColumn++;
         }
 
         return false;
     }
 
-    private boolean checkDiagDown(int row, int column) {
-        int rowIndex = row + column;
-        if(rowIndex > 5)
-            rowIndex = 5;
+    private boolean checkDiagDown(int column, int row) {
+        int startRow = row - column;
+        if(startRow < 0)
+            startRow = 0;
 
-        int columnIndex = row - column;
-        if(columnIndex < 0)
-            columnIndex = 0;
+        int startColumn = column - row;
+        if(startColumn < 0)
+            startColumn = 0;
 
         int count = 0;
-        while (columnIndex < 7 && rowIndex >=0) {
-            if(_board[columnIndex][rowIndex] == _disc) {
+        while (startColumn <= 6 && startRow <= 5 ) {
+            if(_board[startColumn][startRow] == _disc) {
                 count++;
                 if(count == 4){
                     return true;
@@ -130,8 +131,8 @@ public class Game {
                 count = 0;
             }
 
-            rowIndex--;
-            columnIndex++;
+            startRow++;
+            startColumn++;
         }
 
         return false;

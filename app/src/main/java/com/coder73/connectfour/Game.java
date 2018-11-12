@@ -87,7 +87,7 @@ public class Game {
         if(startRow > 5)
             startRow = 5;
 
-        int startColumn = (5 - row) - column;
+        int startColumn = column - (5 - row);
         if(startColumn < 0)
             startColumn = 0;
 

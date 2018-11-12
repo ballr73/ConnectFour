@@ -49,8 +49,9 @@ public class MainActivity extends Activity implements GameListener {
 
     @Override
     public void gameOver(Disc winner) {
-        TextView scoreTextView = findViewById(R.id.scoreTextView);
-        scoreTextView.setText(String.format("Score: Red %d, Yellow %d", _game.getPlayer1Score(), _game.getPlayer2Score()));
+
+        updateScore();
+
         Log.i(this.getClass().getName(),  "Game Over." + winner.toString() + " wins!");
 
         TextView gameOverTextView = findViewById(R.id.gameOverTextView);
@@ -62,6 +63,11 @@ public class MainActivity extends Activity implements GameListener {
                 .alpha(1f)
                 .setDuration(1000)
                 .setListener(null);
+    }
+
+    private void updateScore() {
+        TextView scoreTextView = findViewById(R.id.scoreTextView);
+        scoreTextView.setText(String.format("Score: Red %d, Yellow %d", _game.getPlayer1Score(), _game.getPlayer2Score()));
     }
 
     public void playButtonOnClick(View view) {
@@ -111,5 +117,10 @@ public class MainActivity extends Activity implements GameListener {
             ImageView imageView = (ImageView) _gridLayout.getChildAt(x);
             imageView.setImageResource(R.color.colorPrimary);
         }
+    }
+
+    public void resetScoreButtonClick(View view) {
+        _game.resetScore();
+        updateScore();
     }
 }

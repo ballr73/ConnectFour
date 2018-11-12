@@ -188,4 +188,9 @@ public class Game {
         }
         return false;
     }
+
+    public void resetScore() {
+        _player1Score = 0;
+        _player2Score = 0;
+    }
 }

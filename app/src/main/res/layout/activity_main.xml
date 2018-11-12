@@ -581,6 +581,18 @@
     </android.support.v7.widget.GridLayout>
 
     <Button
+        android:id="@+id/restSoreButton"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="8dp"
+        android:layout_marginTop="8dp"
+        android:background="@color/colorAccent"
+        android:onClick="resetScoreButtonClick"
+        android:text="@string/reset_score"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/gridLayout" />
+
+    <Button
         android:id="@+id/button"
         android:background="@color/colorAccent"
         android:layout_width="wrap_content"

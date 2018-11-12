@@ -13,6 +13,8 @@ import android.widget.LinearLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import org.w3c.dom.Text;
+
 public class MainActivity extends Activity implements GameListener {
     Game _game = new Game(this);
     android.support.v7.widget.GridLayout _gridLayout;
@@ -32,7 +34,7 @@ public class MainActivity extends Activity implements GameListener {
     private void setNextDiscImageView() {
         ImageView nextDiscImageView = findViewById(R.id.nextDiscImageView);
 
-        if(_game._disc == Disc.RED) {
+        if(_game.getDisc() == Disc.RED) {
          nextDiscImageView.setImageResource(R.drawable.red);
         }
         else {
@@ -47,6 +49,8 @@ public class MainActivity extends Activity implements GameListener {
 
     @Override
     public void gameOver(Disc winner) {
+        TextView scoreTextView = findViewById(R.id.scoreTextView);
+        scoreTextView.setText(String.format("Score: Red %d, Yellow %d", _game.getPlayer1Score(), _game.getPlayer2Score()));
         Log.i(this.getClass().getName(),  "Game Over." + winner.toString() + " wins!");
 
         TextView gameOverTextView = findViewById(R.id.gameOverTextView);
@@ -62,7 +66,7 @@ public class MainActivity extends Activity implements GameListener {
 
     public void playButtonOnClick(View view) {
 
-        Disc disc = _game._disc;
+        Disc disc = _game.getDisc();
         int col = Integer.parseInt(view.getTag().toString()); // get column from tag attribute
 
         int row = _game.play(col);
@@ -71,7 +75,6 @@ public class MainActivity extends Activity implements GameListener {
 
             Log.i(this.getClass().getName(), String.format("%s Playing column %d", disc.toString(), col));
 
-//            ImageView imageView = (ImageView) view;
             ImageView imageView = (ImageView) _gridLayout.getChildAt((_gridLayout.getColumnCount() * row) + col);
             imageView.setTranslationY(-1000f);
 

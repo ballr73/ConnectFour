@@ -1,11 +1,24 @@
 package com.coder73.connectfour;
 
 public class Game {
+
     private final GameListener _listener;
     private Disc[][] _board;
-    Disc _disc = Disc.NONE;
-    Disc _winner = Disc.NONE;
-    boolean _gameOver = false;
+    private Disc _disc = Disc.NONE;
+    private Disc _winner = Disc.NONE;
+    private boolean _gameOver = false;
+
+    public int getPlayer1Score() {
+        return _player1Score;
+    }
+
+    public int getPlayer2Score() {
+        return _player2Score;
+    }
+
+    int _player1Score = 0;
+    int _player2Score = 0;
+
     public Disc getDisc() {
 
         return _disc;
@@ -78,6 +91,14 @@ public class Game {
 
     private boolean isWinner(int column, int row) {
         boolean result = checkRow(row) || checkColumn(column) || checkDiagUp(column, row) || checkDiagDown(column, row);
+        if(result){
+            if(_winner == Disc.RED) {
+                _player1Score++;
+            }
+            else {
+                _player2Score++;
+            }
+        }
         return result;
     }
 

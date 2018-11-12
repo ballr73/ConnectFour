@@ -62,14 +62,12 @@ public class Game {
                 _board[column][row] = _disc;
                 result = row;
                 if(isWinner(column,row)) {
-                    _winner = _disc;
                     if(_listener != null) {
                         _listener.gameOver(_winner);
                         _gameOver = true;
                     }
                 }
                 else {
-
                     if (_disc == Disc.RED) {
                         _disc = Disc.YELLOW;
                     } else {
@@ -92,6 +90,7 @@ public class Game {
     private boolean isWinner(int column, int row) {
         boolean result = checkRow(row) || checkColumn(column) || checkDiagUp(column, row) || checkDiagDown(column, row);
         if(result){
+            _winner = _disc;
             if(_winner == Disc.RED) {
                 _player1Score++;
             }

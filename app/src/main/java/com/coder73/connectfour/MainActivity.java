@@ -3,6 +3,8 @@ package com.coder73.connectfour;
 import android.animation.Animator;
 import android.animation.AnimatorListenerAdapter;
 import android.app.Activity;
+import android.media.AudioManager;
+import android.media.SoundPool;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
@@ -16,14 +18,16 @@ import android.widget.Toast;
 import org.w3c.dom.Text;
 
 public class MainActivity extends Activity implements GameListener {
+    SoundPool _soundPool = new SoundPool(5, AudioManager.STREAM_MUSIC, 0);
     Game _game = new Game(this);
     android.support.v7.widget.GridLayout _gridLayout;
     LinearLayout _gameOverLayout;
+    private int _dropSoundId;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
-
+        _dropSoundId = _soundPool.load(this, R.raw.drop, 1);
         _gridLayout = findViewById(R.id.gridLayout);
         _gameOverLayout = findViewById(R.id.gameOverLayout);
 
@@ -92,7 +96,7 @@ public class MainActivity extends Activity implements GameListener {
             }
 
             imageView.animate().translationYBy(1000f).setDuration(300);
-
+            _soundPool.play(_dropSoundId, 1, 1, 0, 0, 1);
             setNextDiscImageView();
         }
     }
